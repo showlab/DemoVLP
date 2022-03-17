@@ -1,0 +1,120 @@
+{
+    "name": "full-WebVid2M-CC3M-1f",
+    "n_gpu": 8,
+    "linear_evaluation": false,
+    "arch": {
+        "type": "ObjectRelation",
+        "object": true,
+        "stream": 2,
+        "args": {
+            "object_params": {
+                "model": "",
+                "input_objects": false,
+                "object_num": 30,
+                "num_frames": 1,
+                "time_module": null
+            },
+            "text_params": {
+                "model": "pretrained/distilbert-base-uncased",
+                "pretrained": true,
+                "input": "text",
+                "two_outputs": true
+            },
+            "projection": "minimal",
+            "load_checkpoint" : ""
+        }
+    },
+    "data_loader":
+            [
+                {
+                    "type": "MultiDistTextObjectVideoDataLoader",
+                    "args":{
+                        "dataset_name": "WebVidObjectSelect",
+                        "data_dir": "",
+                        "object_dir": "",
+                        "reader": "cv2",
+                        "shuffle": true,
+                        "num_workers": 16,
+                        "batch_size": 128, 
+                        "split": "train",
+                        "cut": "2M",
+                        "subsample": 1,
+                        "text_params": {
+                            "object_tags": true,
+                            "drop_raw_caption": false,
+                            "text_aug": true,
+                            "object_aug": false
+                        },
+                        "object_params": {
+                            "input_objects": false,
+                            "pseudo_labels": false,
+                            "input_object_bboxs":false,
+                            "object_num": 30,
+                            "num_frames": 1
+                        }
+                    }
+                },
+                {
+                    "type": "MultiDistTextObjectVideoDataLoader",
+                    "args":{
+                        "dataset_name": "ConceptualCaptions3MObjectSelect",
+                        "data_dir": "",
+                        "object_dir": "",
+                        "reader": "cv2",
+                        "shuffle": true,
+                        "num_workers": 16,
+                        "batch_size": 128,
+                        "split": "train",
+                        "cut": "2M",
+                        "subsample": 1,
+                        "text_params": {
+                            "object_tags": true,
+                            "drop_raw_caption": false,
+                            "text_aug": true,
+                            "object_aug": false
+                        },
+                        "object_params": {
+                            "input_objects": false,
+                            "pseudo_labels": false,
+                            "input_object_bboxs":false,
+                            "object_num": 30,
+                            "num_frames": 1
+                        }
+                    }
+                }
+            ],
+    "optimizer": {
+        "type": "AdamW",
+        "args":{
+            "lr": 1e-5
+        }
+    },
+    "loss": {
+        "type": "GlobalLocalLoss",
+        "args": {
+            "use_local": true,
+            "use_global": true,
+            "coef": 1.0,
+            "focal_type": "equal"
+        }
+    },
+    "metrics": [
+        "t2v_metrics",
+        "v2t_metrics"
+     ],
+    "trainer": {
+        "epochs": 50,
+        "max_samples_per_epoch": 1000000,
+        "save_dir": "exps/dist_demovlp_pretrain",
+        "save_period": 2,
+        "verbosity": 2,
+        "monitor": "min val_loss_0",
+        "early_stop": 10,
+        "init_val": true,
+        "neptune": false,
+        "resume": null
+    },
+    "visualizer": {
+        "type": ""
+    }
+}

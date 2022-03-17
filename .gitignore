@@ -1,0 +1,11 @@
+meta_data/cc3m_training_success_full.tsv
+meta_data/webvid_training_success_full.tsv
+pretrained/
+model/__pycache__/
+logger/__pycache__/
+base/__pycache__/
+utils/__pycache__/
+data_loader/__pycache__/
+trainer/__pycache__/
+__pycache__/
+exps/

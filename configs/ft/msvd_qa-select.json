@@ -1,0 +1,86 @@
+{
+    "name": "MSVD_8f",
+    "n_gpu": 1,
+    "linear_evaluation": false,
+    "arch": {
+        "type": "ObjectQARelation",
+        "stream": 2,
+        "object": true,
+        "args": {
+            "object_params": {
+                "model": "",
+                "input_objects": false,
+                "num_frames": 8,
+                "object_num": 30,
+                "num_label": 1000,
+                "time_module": ""
+            },
+            "text_params": {
+                "model": "pretrained/distilbert-base-uncased",
+                "pretrained": true,
+                "input": "text",
+                "two_outputs": true
+            },
+            "projection": "minimal",
+            "load_checkpoint": ""
+       }
+    },
+    "data_loader": {
+        "type": "MultiDistTextObjectVideoDataLoader",
+        "args":{
+            "dataset_name": "MSVDQAObjectSelect",
+            "data_dir": "",
+            "object_dir": "",
+            "shuffle": true,
+            "num_workers": 32,
+            "batch_size": 64,
+            "split": "train",
+            "cut": "jsfusion",
+            "subsample": 1,
+            "text_params": {
+                "object_tags": true,
+                "drop_raw_caption": false,
+                "text_aug": false,
+                "object_aug": false
+            },
+            "object_params": {
+                "input_objects": false,
+                "pseudo_labels": false,
+                "input_object_bboxs":false,
+                "object_num": 30,
+                "num_frames": 8 
+            }
+        }
+    },
+    "optimizer": {
+        "type": "AdamW",
+        "args":{
+            "lr": 1e-4
+        }
+    },
+    "loss": {
+        "type": "CrossEntropy",
+        "args": {
+        }
+    },
+    "metrics": [
+        "evaluate_qa"
+     ],
+    "trainer": {
+        "epochs": 10,
+        "max_samples_per_epoch": 10000000, 
+        "save_dir": "exps/dist_demovlp_msvd_qa_8_frames/",
+        "save_period": 5,
+        "verbosity": 2,
+        "monitor": "min val_loss_0",
+        "early_stop": 10,
+        "neptune": false,
+        "resume": null
+    },
+    "visualizer": {
+        "type": "",
+        "args": {
+        }
+    }
+
+}

@@ -1,0 +1,90 @@
+{
+    "name": "MSVD_8f",
+    "n_gpu": 2,
+    "linear_evaluation": false,
+    "arch": {
+        "type": "ObjectRelation",
+        "stream": 2,
+        "object": true,
+        "args": {
+            "object_params": {
+                "model": "",
+                "input_objects": false,
+                "num_frames": 8,
+                "object_num": 30,
+                "time_module": ""
+            },
+            "text_params": {
+                "model": "pretrained/distilbert-base-uncased",
+                "pretrained": true,
+                "input": "text",
+                "two_outputs": true
+            },
+            "projection": "minimal",
+            "load_checkpoint": ""
+       }
+    },
+    "data_loader": {
+        "type": "MultiDistTextObjectVideoDataLoader",
+        "args":{
+            "dataset_name": "MSVDObjectSelect",
+            "data_dir": "",
+            "object_dir": "",
+            "shuffle": true,
+            "num_workers": 32,
+            "batch_size": 32,
+            "split": "train",
+            "cut": "jsfusion",
+            "subsample": 1,
+            "text_params": {
+                "object_tags": true,
+                "drop_raw_caption": false,
+                "text_aug": false,
+                "object_aug": false
+            },
+            "object_params": {
+                "input_objects": false,
+                "pseudo_labels": false,
+                "input_object_bboxs":false,
+                "object_num": 30,
+                "num_frames": 8
+            }
+        }
+    },
+    "optimizer": {
+        "type": "AdamW",
+        "args":{
+            "lr": 1e-5
+        }
+    },
+    "loss": {
+        "type": "GlobalLocalLoss",
+        "args": {
+            "use_local": true,
+            "use_global": true,
+            "coef": 1.0,
+            "focal_type": "equal"
+        }
+    },
+    "metrics": [
+        "t2v_metrics",
+        "v2t_metrics"
+     ],
+    "trainer": {
+        "epochs": 10,
+        "max_samples_per_epoch": 10000000,
+        "save_dir": "exps/dist_demovlp_msvd_ret_frames/",
+        "save_period": 5,
+        "verbosity": 2,
+        "monitor": "min val_loss_0",
+        "early_stop": 10,
+        "neptune": false,
+        "resume": null
+    },
+    "visualizer": {
+        "type": "",
+        "args": {
+        }
+    }
+
+}
