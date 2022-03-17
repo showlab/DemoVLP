@@ -4,7 +4,7 @@ Guanyu Cai, Yixiao Ge, Alex Jinpeng Wang, Rui Yan, Xudong Lin, Ying Shan, Liangh
 
 Pytorch implementation of our method for video-language pre-training.  
 
-![avatar][figs/framework.png]
+![avatar](figs/framework.png)
 
 ## Requirement
 ```
