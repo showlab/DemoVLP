@@ -1,5 +1,5 @@
 # DemoVLP
-Revitalize Region Feature for Democratizing Video-Language Pre-training   
+## Revitalize Region Feature for Democratizing Video-Language Pre-training  
 Guanyu Cai, Yixiao Ge, Alex Jinpeng Wang, Rui Yan, Xudong Lin, Ying Shan, Lianghua He, Xiaohu Qie, Jianping Wu, Mike Zheng Shou [[Arxiv]][1]  
 
 Pytorch implementation of our method for video-language pre-training.  
