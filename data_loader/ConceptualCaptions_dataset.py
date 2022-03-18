@@ -86,10 +86,12 @@ class ConceptualCaptions3MObjectSelect(TextObjectDataset):
         object_rel_fp, object_fp = self._get_object_path(sample)
         caption = self._get_caption(sample)
         if not os.path.exists(object_fp):
-            print("not exist object in: {}, select another sample".format(
-                object_fp))
-            item_new = random.randint(1, self.__len__())
-            return self.__getitem__(item_new)
+            object_fp = object_fp.replace('_1.npz', '_0.npz')
+            if not os.path.exists(object_fp):
+                print("not exist object in: {}, select another sample".format(
+                    object_fp))
+                item_new = random.randint(1, self.__len__())
+                return self.__getitem__(item_new)
         # load object
         try:
             frame_idxs = [0]
