@@ -36,7 +36,7 @@ Download all files from huggingface [distilbert-base-uncased][2], and put them i
 
 ### Pre-train datasets
 - WebVid  
-Refer to Gihub repo [WebVid](https://github.com/m-bain/webvid).
+Refer to Github repo [WebVid](https://github.com/m-bain/webvid).
 
 - CC3M  
 Refer to [Conceptual Captions Website](https://ai.google.com/research/ConceptualCaptions/download).
